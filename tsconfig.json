@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    // "isolatedModules": true,
+    // "verbatimModuleSyntax": true,
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "declaration": true,
+    "outDir": ".build/types",
+    "removeComments": true,
+    "allowUnusedLabels": true,
+    "allowUnreachableCode": true,
+    "noEmitOnError": false,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "stripInternal": true
+  },
+  "include": ["./src/**/*.ts"]
+}

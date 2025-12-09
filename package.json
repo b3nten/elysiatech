@@ -1,0 +1,133 @@
+{
+	"name": "elysiatech",
+	"type": "module",
+	"version": "0.0.10",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"dev": "cd playground && vite",
+		"build": "tsx build",
+		"build:types": "tsc --declaration --emitDeclarationOnly --project tsconfig.json --outDir .build/types",
+		"lint": "eslint . --fix",
+		"publish-npm": "npm publish . --tag beta"
+	},
+	"dependencies": {
+		"bvh.js": "^0.0.13",
+		"supports-color": "^5.4.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.1",
+		"@types/node": "^24.10.1",
+		"@types/three": "^0.181.0",
+		"@typescript-eslint/parser": "^8.48.1",
+		"esbuild": "^0.27.1",
+		"eslint": "^9.39.1",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3",
+		"vite": "^6.0.7",
+		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"peerDependencies": {
+		"jolt-physics": "^0.31.0",
+		"three": "^0.181.0"
+	},
+	"peerDependenciesMeta": {
+		"jolt-physics": {
+			"optional": true
+		},
+		"three": {
+			"optional": true
+		}
+	},
+	"files": [
+		".build",
+		"assets",
+		"README.md",
+		"LICENSE"
+	],
+	"exports": {
+		"./": {
+			"import": {
+				"instrument": "./.build/instrument/mod.js",
+				"development": "./.build/dev/mod.js",
+				"production": "./.build/prod/mod.js",
+				"default": "./.build/prod/mod.js"
+			},
+			"types": "./.build/types/mod.d.ts"
+		},
+		"./asset": {
+			"import": {
+				"instrument": "./.build/instrument/asset/index.js",
+				"development": "./.build/dev/asset/index.js",
+				"production": "./.build/prod/asset/index.js",
+				"default": "./.build/prod/asset/index.js"
+			},
+			"types": "./.build/types/asset/index.d.ts"
+		},
+		"./ecs": {
+			"import": {
+				"instrument": "./.build/instrument/ecs/index.js",
+				"development": "./.build/dev/ecs/index.js",
+				"production": "./.build/prod/ecs/index.js",
+				"default": "./.build/prod/ecs/index.js"
+			},
+			"types": "./.build/types/ecs/index.d.ts"
+		},
+		"./engine": {
+			"import": {
+				"instrument": "./.build/instrument/engine/index.js",
+				"development": "./.build/dev/engine/index.js",
+				"production": "./.build/prod/engine/index.js",
+				"default": "./.build/prod/engine/index.js"
+			},
+			"types": "./.build/types/asset/index.d.ts"
+		},
+		"./events": {
+			"import": {
+				"instrument": "./.build/instrument/events/index.js",
+				"development": "./.build/dev/events/index.js",
+				"production": "./.build/prod/events/index.js",
+				"default": "./.build/prod/events/index.js"
+			},
+			"types": "./.build/types/events/index.d.ts"
+		},
+		"./input": {
+			"import": {
+				"instrument": "./.build/instrument/input/index.js",
+				"development": "./.build/dev/input/index.js",
+				"production": "./.build/prod/input/index.js",
+				"default": "./.build/prod/input/index.js"
+			},
+			"types": "./.build/types/input/index.d.ts"
+		},
+		"./lib": {
+			"import": {
+				"instrument": "./.build/instrument/lib/index.js",
+				"development": "./.build/dev/lib/index.js",
+				"production": "./.build/prod/lib/index.js",
+				"default": "./.build/prod/lib/index.js"
+			},
+			"types": "./.build/types/lib/index.d.ts"
+		},
+		"./math": {
+			"import": {
+				"instrument": "./.build/instrument/math/index.js",
+				"development": "./.build/dev/math/index.js",
+				"production": "./.build/prod/math/index.js",
+				"default": "./.build/prod/math/index.js"
+			},
+			"types": "./.build/types/math/index.d.ts"
+		},
+		"./three": {
+			"import": {
+				"instrument": "./.build/instrument/three/index.js",
+				"development": "./.build/dev/three/index.js",
+				"production": "./.build/prod/three/index.js",
+				"default": "./.build/prod/three/index.js"
+			},
+			"types": "./.build/types/three/index.d.ts"
+		}
+	},
+	"packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"
+}
