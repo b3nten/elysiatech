@@ -1,10 +1,5 @@
-import { EventManager } from "../events/manager";
-import { AutoMap } from "../lib/automap";
-import { isConstructor } from "../lib/checks";
-import { constructorOf, make } from "../lib/functions";
-import { logger, warnOnce } from "../lib/logging";
-import { SparseSet } from "../lib/sparseset";
-import type { ConstructorOf, InstanceOf } from "../lib/types";
+import { EventManager} from "../events/mod";
+import { isConstructor, constructorOf, make, logger, warnOnce,  SparseSet, AutoMap, type ConstructorOf, type InstanceOf } from "../lib/mod";
 import type { Component } from "./component";
 import { entityDoesNotExistError, type EntityID } from "./entity";
 import type { Prefab } from "./prefab";
@@ -630,7 +625,7 @@ export class World
 		Set<(world: World, entity: EntityID, component: any) => void>
 	> = new AutoMap(() => new Set());
 
-	constructor() 
+	constructor()
 	{
 		this.createEntity()
 		this.componentIterator = this.componentIterator.bind(this)

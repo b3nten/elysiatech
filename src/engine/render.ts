@@ -1,5 +1,5 @@
 import type { Camera, Scene, WebGLRenderer } from "three"
-import type { Viewport } from "../three"
+import type { Viewport } from "../three/mod"
 
 export interface IRenderPipeline
 {

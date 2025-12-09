@@ -1,4 +1,4 @@
-import { EventManager } from "../events/manager";
+import { EventManager } from "../events/mod";
 import { KeyCode, KeyDownEvent, KeyPressedEvent, KeyUpEvent } from "./keyboard.ts";
 import { MouseCode, MouseDownEvent, MouseMoveEvent, MouseUpEvent } from "./mouse.ts";
 

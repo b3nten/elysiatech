@@ -1,8 +1,8 @@
 import { Camera, PCFSoftShadowMap, Scene, WebGLRenderer } from "three"
-import { FreeLookControlSystem, ThreeObjectSystem, ThreeRenderSystem, Transform, Viewport } from "../three"
-import { ActorSystem, World } from "../ecs"
-import { Frameloop } from "../lib/frameloop"
-import { clamp } from "../math/utility"
+import { FreeLookControlSystem, ThreeObjectSystem, ThreeRenderSystem, Transform, Viewport } from "../three/mod"
+import { ActorSystem, World } from "../ecs/mod"
+import { Frameloop } from "../lib/mod"
+import { clamp } from "../math/mod"
 import type { IRenderPipeline } from "./render"
 
 export type EngineArgs = {
@@ -27,8 +27,8 @@ export class Engine
 	run = (): Frameloop =>
 	{
 		const world = new World();
-		this.init(world)
 		this.setupCoreComponents(world);
+		this.init(world)
 		this.setupCoreSystems(world);
 		world.startup();
 		return new Frameloop(world.update);
@@ -87,9 +87,9 @@ export class Engine
 	createRenderer = (world: World) =>
 	{
 		const self = this;
-		world.addSystem(class extends ThreeRenderSystem 
+		world.addSystem(class extends ThreeRenderSystem
 		{
-			render(delta: number, scene: Scene, camera: Camera, renderer: WebGLRenderer, viewport: Viewport): void 
+			render(delta: number, scene: Scene, camera: Camera, renderer: WebGLRenderer, viewport: Viewport): void
 			{
 				(self.renderPipeline?.render ?? super.render)(delta, scene, camera, renderer, viewport)
 			}

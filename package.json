@@ -1,7 +1,7 @@
 {
 	"name": "elysiatech",
 	"type": "module",
-	"version": "0.0.10",
+	"version": "2.0.0-beta.49",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -47,7 +47,7 @@
 		"LICENSE"
 	],
 	"exports": {
-		"./": {
+		".": {
 			"import": {
 				"instrument": "./.build/instrument/mod.js",
 				"development": "./.build/dev/mod.js",
@@ -58,75 +58,75 @@
 		},
 		"./asset": {
 			"import": {
-				"instrument": "./.build/instrument/asset/index.js",
-				"development": "./.build/dev/asset/index.js",
-				"production": "./.build/prod/asset/index.js",
-				"default": "./.build/prod/asset/index.js"
+				"instrument": "./.build/instrument/asset/mod.js",
+				"development": "./.build/dev/asset/mod.js",
+				"production": "./.build/prod/asset/mod.js",
+				"default": "./.build/prod/asset/mod.js"
 			},
-			"types": "./.build/types/asset/index.d.ts"
+			"types": "./.build/types/asset/mod.d.ts"
 		},
 		"./ecs": {
 			"import": {
-				"instrument": "./.build/instrument/ecs/index.js",
-				"development": "./.build/dev/ecs/index.js",
-				"production": "./.build/prod/ecs/index.js",
-				"default": "./.build/prod/ecs/index.js"
+				"instrument": "./.build/instrument/ecs/mod.js",
+				"development": "./.build/dev/ecs/mod.js",
+				"production": "./.build/prod/ecs/mod.js",
+				"default": "./.build/prod/ecs/mod.js"
 			},
-			"types": "./.build/types/ecs/index.d.ts"
+			"types": "./.build/types/ecs/mod.d.ts"
 		},
 		"./engine": {
 			"import": {
-				"instrument": "./.build/instrument/engine/index.js",
-				"development": "./.build/dev/engine/index.js",
-				"production": "./.build/prod/engine/index.js",
-				"default": "./.build/prod/engine/index.js"
+				"instrument": "./.build/instrument/engine/mod.js",
+				"development": "./.build/dev/engine/mod.js",
+				"production": "./.build/prod/engine/mod.js",
+				"default": "./.build/prod/engine/mod.js"
 			},
-			"types": "./.build/types/asset/index.d.ts"
+			"types": "./.build/types/engine/mod.d.ts"
 		},
 		"./events": {
 			"import": {
-				"instrument": "./.build/instrument/events/index.js",
-				"development": "./.build/dev/events/index.js",
-				"production": "./.build/prod/events/index.js",
-				"default": "./.build/prod/events/index.js"
+				"instrument": "./.build/instrument/events/mod.js",
+				"development": "./.build/dev/events/mod.js",
+				"production": "./.build/prod/events/mod.js",
+				"default": "./.build/prod/events/mod.js"
 			},
-			"types": "./.build/types/events/index.d.ts"
+			"types": "./.build/types/events/mod.d.ts"
 		},
 		"./input": {
 			"import": {
-				"instrument": "./.build/instrument/input/index.js",
-				"development": "./.build/dev/input/index.js",
-				"production": "./.build/prod/input/index.js",
-				"default": "./.build/prod/input/index.js"
+				"instrument": "./.build/instrument/input/mod.js",
+				"development": "./.build/dev/input/mod.js",
+				"production": "./.build/prod/input/mod.js",
+				"default": "./.build/prod/input/mod.js"
 			},
-			"types": "./.build/types/input/index.d.ts"
+			"types": "./.build/types/input/mod.d.ts"
 		},
 		"./lib": {
 			"import": {
-				"instrument": "./.build/instrument/lib/index.js",
-				"development": "./.build/dev/lib/index.js",
-				"production": "./.build/prod/lib/index.js",
-				"default": "./.build/prod/lib/index.js"
+				"instrument": "./.build/instrument/lib/mod.js",
+				"development": "./.build/dev/lib/mod.js",
+				"production": "./.build/prod/lib/mod.js",
+				"default": "./.build/prod/lib/mod.js"
 			},
-			"types": "./.build/types/lib/index.d.ts"
+			"types": "./.build/types/lib/mod.d.ts"
 		},
 		"./math": {
 			"import": {
-				"instrument": "./.build/instrument/math/index.js",
-				"development": "./.build/dev/math/index.js",
-				"production": "./.build/prod/math/index.js",
-				"default": "./.build/prod/math/index.js"
+				"instrument": "./.build/instrument/math/mod.js",
+				"development": "./.build/dev/math/mod.js",
+				"production": "./.build/prod/math/mod.js",
+				"default": "./.build/prod/math/mod.js"
 			},
-			"types": "./.build/types/math/index.d.ts"
+			"types": "./.build/types/math/mod.d.ts"
 		},
 		"./three": {
 			"import": {
-				"instrument": "./.build/instrument/three/index.js",
-				"development": "./.build/dev/three/index.js",
-				"production": "./.build/prod/three/index.js",
-				"default": "./.build/prod/three/index.js"
+				"instrument": "./.build/instrument/three/mod.js",
+				"development": "./.build/dev/three/mod.js",
+				"production": "./.build/prod/three/mod.js",
+				"default": "./.build/prod/three/mod.js"
 			},
-			"types": "./.build/types/three/index.d.ts"
+			"types": "./.build/types/three/mod.d.ts"
 		}
 	},
 	"packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"

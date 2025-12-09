@@ -1,4 +1,4 @@
-import { createEvent } from "../events/create";
+import { createEvent } from "../events/mod";
 
 /**
  * Enum for key codes, corresponding to the MouseEvent.button property.

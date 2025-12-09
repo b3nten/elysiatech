@@ -1,13 +1,9 @@
 import { Scene } from "three";
-import { System } from "../ecs/system";
-import { assert } from "../lib/asserts";
 import { threeObjectTag } from "./objtag";
 import { Transform } from "./transform";
 import { Object3D } from "three/webgpu";
-import { Instrumentor } from "../lib/instrument";
-import type { World } from "../ecs/world";
-import type { EntityID } from "../ecs/entity";
-import type { Component } from "../ecs/component";
+import { Instrumentor, assert } from "../lib/mod";
+import { System, type World, type EntityID, type Component } from "../ecs/mod";
 
 /**
  * This system syncs the ECS world with a {@link Three.Scene}.

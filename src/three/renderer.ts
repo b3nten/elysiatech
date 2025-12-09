@@ -1,9 +1,7 @@
 import { Camera, OrthographicCamera, PerspectiveCamera, Scene, WebGLRenderer } from "three";
-import { System } from "../ecs/system";
-import { Instrumentor } from "../lib/instrument";
-import { warnOnce } from "../lib/logging";
+import { System, type EntityID } from "../ecs/mod";
+import { Instrumentor, warnOnce } from "../lib/mod";
 import { Viewport } from "./viewport";
-import type { EntityID } from "../ecs/entity";
 import { ActiveCameraComponent } from "./components";
 
 export class ThreeRenderSystem extends System
@@ -126,7 +124,7 @@ export class ThreeRenderSystem extends System
 	resize(viewport: Viewport)
 	{
 		let renderer = this.world.getSingletonComponent(WebGLRenderer);
-		if (!renderer) 
+		if (!renderer)
 		{
 			warnOnce("ThreeBasicRenderSystem: No renderer found on SceneDataComponent. Cannot resize.");
 		}

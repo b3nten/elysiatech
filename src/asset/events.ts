@@ -1,4 +1,4 @@
-import { createEvent } from "../events/create";
+import { createEvent } from "../events/mod";
 import type { AssetLoader } from "./loader";
 
 export const progressEvent = createEvent<number>(

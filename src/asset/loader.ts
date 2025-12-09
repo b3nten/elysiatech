@@ -1,6 +1,5 @@
-import { EventManager } from "../events/manager";
-import { assert } from "../lib/asserts";
-import type { ConstructorOf } from "../lib/types";
+import { EventManager } from "../events/mod";
+import { assert, type ConstructorOf } from "../lib/mod";
 import type { Asset } from "./asset";
 import { errorEvent, loadedEvent, progressEvent } from "./events";
 

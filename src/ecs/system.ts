@@ -1,5 +1,4 @@
-import { assert } from "../lib/asserts";
-import { isFunction } from "../lib/checks";
+import { assert, isFunction } from "../lib/mod";
 import type { World } from "./world";
 
 /**

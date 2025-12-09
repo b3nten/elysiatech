@@ -1,13 +1,10 @@
 import { Euler, Vector2, Vector3 } from "three";
-import type { Component } from "../ecs/component";
-import { System } from "../ecs/system";
-import { KeyCode, KeyDownEvent, KeyUpEvent } from "../input/keyboard";
-import { MouseCode, MouseMoveEvent } from "../input/mouse";
-import { Input } from "../input/input";
+import { type Component, System } from "../ecs/mod";
+import { Input, KeyCode, KeyDownEvent, KeyUpEvent, MouseCode, MouseMoveEvent } from "../input/mod";
 import { Transform } from "./transform";
-import { isNumber } from "../lib/checks";
-import { clamp } from "../math/utility";
-import type { EventData } from "../events/create";
+import { isNumber } from "../lib/mod";
+import { clamp } from "../math/mod";
+import type { EventData } from "../events/mod";
 
 export class FreeLookComponent implements Component
 {

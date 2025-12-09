@@ -1,15 +1,15 @@
-import { AutoMap } from "../lib/automap.ts";
+import { AutoMap } from "../lib/mod.ts";
 import type { EventType } from "./create.ts";
 
 /**
  * Simple typed event bus.
  */
-export class EventManager 
+export class EventManager
 {
 	register<T extends EventType<any>>(
 		type: T,
 		listener: (value: T extends EventType<infer U> ? U : never) => void,
-	): VoidFunction 
+	): VoidFunction
 	{
 		this.listeners.get(type).add(listener);
 		return () => this.unregister(type, listener);
@@ -18,7 +18,7 @@ export class EventManager
 	unregister<T extends EventType<any>>(
 		type: T,
 		listener: Function,
-	): void 
+	): void
 	{
 		this.listeners.get(type).delete(listener);
 	}
@@ -31,10 +31,10 @@ export class EventManager
 	notify<T extends EventType<any>>(
 		event: T,
 		data?: T extends EventType<infer U> ? U : never,
-	): void 
+	): void
 	{
 		let listeners = this.listeners.get(event);
-		for (const listener of listeners) 
+		for (const listener of listeners)
 		{
 			listener(data);
 		}
@@ -46,7 +46,7 @@ export class EventManager
 		() => new Set(),
 	);
 
-	constructor() 
+	constructor()
 	{
 		this.register = this.register.bind(this);
 		this.unregister = this.unregister.bind(this);

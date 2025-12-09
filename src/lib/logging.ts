@@ -1,4 +1,4 @@
-import { lerp } from "../math/lerp.ts";
+import { lerp } from "../math/mod";
 // @ts-expect-error
 import supportsColor from "supports-color";
 
@@ -67,42 +67,42 @@ interface Writer {
 // ██████╔╝██║  ██║███████║██║╚██████╗
 // ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝
 
-class BasicConsoleWriter implements Writer 
+class BasicConsoleWriter implements Writer
 {
-	constructor(private name: string) 
+	constructor(private name: string)
 	{}
 
-	message(message: any[]): void 
+	message(message: any[]): void
 	{
 		console.log(`${performance.now()} [${this.name}]`, ...message);
 	}
 
-	debug(message: any[]): void 
+	debug(message: any[]): void
 	{
 		console.debug(`${performance.now()} [${this.name}] DEBUG`, ...message);
 	}
 
-	info(message: any[]): void 
+	info(message: any[]): void
 	{
 		console.info(`${performance.now()} [${this.name}] INFO`, ...message);
 	}
 
-	success(message: any[]): void 
+	success(message: any[]): void
 	{
 		console.log(`${performance.now()} [${this.name}] SUCCESS`, ...message);
 	}
 
-	warn(message: any[]): void 
+	warn(message: any[]): void
 	{
 		console.warn(`${performance.now()} [${this.name}] WARN`, ...message);
 	}
 
-	error(message: any[]): void 
+	error(message: any[]): void
 	{
 		console.error(`${performance.now()} [${this.name}] ERROR`, ...message);
 	}
 
-	critical(message: any[]): void 
+	critical(message: any[]): void
 	{
 		console.error(`${performance.now()} [${this.name}] CRITICAL`, ...message);
 	}
@@ -120,13 +120,13 @@ function interpolateRGB(
 	startColor: Readonly<[number, number, number]>,
 	endColor: Readonly<[number, number, number]>,
 	t: number,
-): Readonly<[number, number, number]> 
+): Readonly<[number, number, number]>
 {
-	if (t < 0) 
+	if (t < 0)
 	{
 		return startColor;
 	}
-	if (t > 1) 
+	if (t > 1)
 	{
 		return endColor;
 	}
@@ -137,7 +137,7 @@ function interpolateRGB(
 	];
 }
 
-function isBrowser() 
+function isBrowser()
 {
 	return (
 	//@ts-ignore
@@ -154,7 +154,7 @@ function formatAnsi(
     foreground?: Readonly<[number, number, number]>;
     background?: Readonly<[number, number, number]>;
   } = {},
-): { content: string; styles: never[] } 
+): { content: string; styles: never[] }
 {
 	let c = "";
 	if (styles.bold) c += "1;";
@@ -179,7 +179,7 @@ function formatBrowser(
     background?: Readonly<[number, number, number]>;
     size?: number;
   } = {},
-) 
+)
 {
 	const styles: string[] = [];
 	if (options.bold) styles.push("font-weight: bold;");
@@ -202,7 +202,7 @@ function format(
 ): {
   content: string;
   styles: string[];
-} 
+}
 {
 	if (isBrowser()) return formatBrowser(string, options);
 	return formatAnsi(string, options);
@@ -214,16 +214,16 @@ function stringGradient(
     [Readonly<[number, number, number]>, Readonly<[number, number, number]>]
   >,
 	options = {},
-): { content: string; styles: string[] } 
+): { content: string; styles: string[] }
 {
 	const result = {
 		content: "",
 		styles: [] as string[],
 	};
-	if (isBrowser()) 
+	if (isBrowser())
 	{
 		result.content = `%c${str.split("").join("%c")}`;
-		for (let i = 0; i < str.length; i++) 
+		for (let i = 0; i < str.length; i++)
 		{
 			const g = interpolateRGB(gradient[0], gradient[1], i / str.length);
 			result.styles.push(
@@ -232,7 +232,7 @@ function stringGradient(
 		}
 		return result;
 	}
-	for (let i = 0; i < str.length; i++) 
+	for (let i = 0; i < str.length; i++)
 	{
 		result.content += formatAnsi(str[i], {
 			...options,
@@ -242,12 +242,12 @@ function stringGradient(
 	return result;
 }
 
-function toBoolean(val: any): boolean 
+function toBoolean(val: any): boolean
 {
 	return val ? val !== "false" : false;
 }
 
-function env(): any 
+function env(): any
 {
 	// @ts-ignore - Node specific
 	return (
@@ -262,12 +262,12 @@ function env(): any
 	);
 }
 
-function isColorSupported(): boolean 
+function isColorSupported(): boolean
 {
 	return isBrowser() || supportsColor.stdout;
 }
 
-class FancyConsoleWriter implements Writer 
+class FancyConsoleWriter implements Writer
 {
 	formattedName: { content: string; styles: string[] };
 
@@ -278,7 +278,7 @@ class FancyConsoleWriter implements Writer
     color: Readonly<
       [Readonly<[number, number, number]>, Readonly<[number, number, number]>]
     >,
-	) 
+	)
 	{
 		this.formattedName = stringGradient(`[ ${this.name} ]`, color);
 		this.levels = {
@@ -294,7 +294,7 @@ class FancyConsoleWriter implements Writer
 		};
 	}
 
-	message(message: any[]): void 
+	message(message: any[]): void
 	{
 		console.log(
 			`${this.formattedName.content}`,
@@ -303,7 +303,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	debug(message: any[]): void 
+	debug(message: any[]): void
 	{
 		console.debug(
 			`${this.formattedName.content} ${this.levels.debug.content}`,
@@ -313,7 +313,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	info(message: any[]): void 
+	info(message: any[]): void
 	{
 		console.info(
 			`${this.formattedName.content} ${this.levels.info.content}`,
@@ -323,7 +323,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	success(message: any[]): void 
+	success(message: any[]): void
 	{
 		console.log(
 			`${this.formattedName.content} ${this.levels.success.content}`,
@@ -333,7 +333,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	warn(message: any[]): void 
+	warn(message: any[]): void
 	{
 		console.warn(
 			`${this.formattedName.content} ${this.levels.warn.content}`,
@@ -343,7 +343,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	error(message: any[]): void 
+	error(message: any[]): void
 	{
 		console.error(
 			`${this.formattedName.content} ${this.levels.error.content}`,
@@ -353,7 +353,7 @@ class FancyConsoleWriter implements Writer
 		);
 	}
 
-	critical(message: any[]): void 
+	critical(message: any[]): void
 	{
 		console.error(
 			`${this.formattedName.content} ${this.levels.critical.content}`,
@@ -382,7 +382,7 @@ class FancyConsoleWriter implements Writer
  * @param {LogLevel} level - The minimum logging level to output
  * @param {Writer} writer - The writer implementation for log output
  */
-class Logger 
+class Logger
 {
 	writer: Writer;
 
@@ -392,7 +392,7 @@ class Logger
     color?: Readonly<
       [Readonly<[number, number, number]>, Readonly<[number, number, number]>]
     >,
-	) 
+	)
 	{
 		this.writer = isColorSupported()
 			? new FancyConsoleWriter(name ?? "App", color ?? colors.purple)
@@ -402,7 +402,7 @@ class Logger
 	/**
    * Log a message.
    */
-	message = (...msg: any[]): void => 
+	message = (...msg: any[]): void =>
 	{
 		this.writer.message(msg);
 	};
@@ -414,7 +414,7 @@ class Logger
    * @param  {...any} msg
    * @returns void
    */
-	debug = (...msg: any[]) => 
+	debug = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Debug && this.writer.debug(msg);
 	};
@@ -425,7 +425,7 @@ class Logger
    * @returns void
    */
 
-	info = (...msg: any[]) => 
+	info = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Info && this.writer.info(msg);
 	};
@@ -435,7 +435,7 @@ class Logger
    * @returns void
    */
 
-	success = (...msg: any[]) => 
+	success = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Info && this.writer.success(msg);
 	};
@@ -445,7 +445,7 @@ class Logger
    * @param  {...any} msg
    * @returns void
    */
-	warn = (...msg: any[]) => 
+	warn = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Warn && this.writer.warn(msg);
 	};
@@ -455,7 +455,7 @@ class Logger
    * @param  {...any} msg
    * @returns void
    */
-	error = (...msg: any[]) => 
+	error = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Error && this.writer.error(msg);
 	};
@@ -465,7 +465,7 @@ class Logger
    * @param  {...any} msg
    * @returns void
    */
-	critical = (...msg: any[]) => 
+	critical = (...msg: any[]) =>
 	{
 		this.level <= LogLevel.Critical && this.writer.critical(msg);
 	};
@@ -476,9 +476,9 @@ const logger = new Logger("elysia", LogLevel.Debug, colors.purple);
 
 let warns = new Set<string>();
 /* @internal */
-function warnOnce(str: string) 
+function warnOnce(str: string)
 {
-	if (!warns.has(str)) 
+	if (!warns.has(str))
 	{
 		warns.add(str);
 		logger.warn(str);

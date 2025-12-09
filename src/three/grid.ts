@@ -1,5 +1,5 @@
 import { Color, DoubleSide, Mesh, PlaneGeometry, ShaderMaterial } from "three";
-import type { Component } from "../ecs/component";
+import type { Component } from "../ecs/mod";
 
 export class InfiniteGridHelper extends Mesh implements Component
 {

@@ -1,4 +1,4 @@
-import { logger } from "../lib/logging";
+import { logger } from "../lib/mod";
 import type { Component } from "./component";
 import { entityDoesNotExistError, type EntityID } from "./entity";
 import type { World } from "./world";

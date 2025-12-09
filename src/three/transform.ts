@@ -1,8 +1,5 @@
 import { Matrix4, Quaternion, Vector3 } from "three";
-import type { EntityID } from "../ecs/entity";
-import type { World } from "../ecs/world";
-import { Relationship } from "../ecs/relationship";
-import type { Component } from "../ecs/component";
+import { Relationship, type EntityID, type World, type Component } from "../ecs/mod";
 import { Instrumentor } from "../lib/instrument";
 
 export class Transform implements Component

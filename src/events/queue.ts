@@ -1,4 +1,4 @@
-import { AutoMap } from "../lib/automap";
+import { AutoMap } from "../lib/mod";
 import type { EventType } from "./create";
 
 /** Double buffered event queue that supports read-after-dispatching. */

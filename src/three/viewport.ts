@@ -1,4 +1,4 @@
-import type { Component } from "../ecs/component";
+import type { Component } from "../ecs/mod";
 
 type ViewportConstructorArgs = {
 	width: number;
