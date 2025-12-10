@@ -10,7 +10,7 @@
 		"build": "vitest run && tsx build",
 		"lint": "eslint . --fix",
 		"test": "vitest",
-		"publish-npm": "vitest run && pnpm build && npm publish . --tag beta"
+		"publish-npm": "pnpm build && npm publish --tag beta"
 	},
 	"dependencies": {
 		"bvh.js": "^0.0.13",
