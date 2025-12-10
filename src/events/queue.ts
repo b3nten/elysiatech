@@ -8,14 +8,22 @@ export class EventQueue
 	 * Push an event to the queue.
 	 * @param event
 	 */
-	push<T>(event: EventType<T>, payload: EventType<T>["type"])
+	push<T extends EventType<undefined>>(event: T): void;
+	push<T extends EventType<any>>(
+		event: T,
+		data: T extends EventType<infer U> ? U : never,
+	): void;
+	push<T extends EventType<any>>(
+		event: T,
+		data?: T extends EventType<infer U> ? U : never,
+	): void
 	{
 		if (this.hasFlushed)
 		{
-			this.nextQueue.push(event, payload);
+			this.nextQueue.push(event, data);
 			return;
 		}
-		this.queue.push(event, payload);
+		this.queue.push(event, data);
 	}
 
 	/**
@@ -32,19 +40,7 @@ export class EventQueue
 			let listeners = this.listeners.get(event);
 			for (const listener of listeners)
 			{
-				{
-					try
-					{
-						listener(payload);
-					}
-					catch (cause)
-					{
-						throw Error(`Error calling queued event ${event}`, { cause });
-					}
-				}
-				{
-					listener(payload);
-				}
+				listener(payload);
 			}
 		}
 	}
