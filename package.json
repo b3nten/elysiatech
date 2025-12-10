@@ -7,13 +7,14 @@
 	},
 	"scripts": {
 		"dev": "cd playground && vite",
-		"build": "tsx build",
-		"build:types": "tsc --declaration --emitDeclarationOnly --project tsconfig.json --outDir .build/types",
+		"build": "pnpm test && tsx build",
 		"lint": "eslint . --fix",
+		"test": "vitest",
 		"publish-npm": "npm publish . --tag beta"
 	},
 	"dependencies": {
 		"bvh.js": "^0.0.13",
+		"lit": "^3.3.1",
 		"supports-color": "^5.4.0"
 	},
 	"devDependencies": {
@@ -26,7 +27,8 @@
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"vite": "^6.0.7",
-		"vite-tsconfig-paths": "^5.1.4"
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^4.0.15"
 	},
 	"peerDependencies": {
 		"jolt-physics": "^0.31.0",

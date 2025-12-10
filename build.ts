@@ -2,6 +2,7 @@ import * as esbuild from "esbuild";
 import * as fs from "node:fs";
 import { spawn } from "child_process";
 import { colors, Logger, LogLevel } from "./src/lib/logging.ts";
+import { join } from "node:path";
 
 const logger = new Logger("100x", LogLevel.Debug, colors.sunset);
 
@@ -64,14 +65,19 @@ const keepStructurePlugin: esbuild.Plugin = {
           external: true,
         };
       } else {
-        return { path: args.path, external: true };
+
       }
     });
   },
 };
 
+const entryPoints = fs.readdirSync("src", { recursive: true, withFileTypes: true })
+	.filter(it => it.isFile())
+	.filter(it => !it.name.endsWith(".test.ts"))
+	.map(it => join(it.parentPath, it.name))
+
 const builder = new Builder({
-    entryPoints: ["src/**/*.ts"],
+    entryPoints: entryPoints,
     bundle: true,
     format: "esm",
     target: ["es2022"],
