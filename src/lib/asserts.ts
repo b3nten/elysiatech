@@ -100,6 +100,7 @@ export function assertRecord(
 ): asserts input is Record<string, unknown>
 {
 	assert(typeof input === "object", message);
+	assert(!Array.isArray(input), message);
 	assertNotNull(input, message);
 	for (const key of Object.keys(input as Record<string, unknown>))
 	{
@@ -118,7 +119,7 @@ export function assertRecordWithKeys<K extends string>(
 	assertRecord(input, message);
 	for (const key of keys)
 	{
-		assertNotUndefined(input[key]);
+		assertNotUndefined(input[key], message);
 	}
 }
 
@@ -255,7 +256,7 @@ export function mustExist<T>(
 	message: string = expectedToBe("not null"),
 ): NonNullable<T>
 {
-	assertNotNull(value, message);
+	assertNotVoid(value, message);
 	return value as NonNullable<T>;
 }
 
