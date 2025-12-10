@@ -2,12 +2,12 @@
  * A sparse set that stores components of type T.
  * @typeParam T The type of the components to store.
  */
-export class SparseSet<T> 
+export class SparseSet<T>
 {
 	/**
 	 * The number of entities in the set.
 	 */
-	get size(): number 
+	get size(): number
 	{
 		return this.dense.length;
 	}
@@ -15,7 +15,7 @@ export class SparseSet<T>
 	/**
 	 * The first component in the set.
 	 */
-	get first(): T | undefined 
+	get first(): T | undefined
 	{
 		if (this.size === 0) return undefined;
 		return this.components[0];
@@ -24,7 +24,7 @@ export class SparseSet<T>
 	/**
 	 * Add an entity and its component to the set.
 	 */
-	add(entity: number, component: T): boolean 
+	add(entity: number, component: T): boolean
 	{
 		if (this.has(entity)) return false;
 		const index = this.dense.length;
@@ -37,34 +37,38 @@ export class SparseSet<T>
 	/**
 	 * Remove an entity and it's component from the set.
 	 */
-	remove(entity: number) 
+	remove(entity: number)
 	{
 		if (!this.has(entity)) return;
-		const index = this.sparse[entity];
-		const component = this.components[index];
-		delete this.sparse[entity];
-		delete this.components[index];
-		delete this.dense[index];
-		const lastDenseItem = this.dense.pop();
-		const lastComponentItem = this.components.pop();
-		if (lastDenseItem !== undefined) 
+
+		const indexToRemove = this.sparse[entity];
+		const lastIndex = this.dense.length - 1;
+
+		// If the entity to remove is not the last element, we swap it with the last element.
+		if (indexToRemove !== lastIndex)
 		{
-			this.sparse[lastDenseItem] = index;
-			this.components[index] = lastComponentItem!;
-			this.dense[index] = lastDenseItem;
+			const lastEntity = this.dense[lastIndex];
+			this.dense[indexToRemove] = lastEntity;
+			this.components[indexToRemove] = this.components[lastIndex];
+			this.sparse[lastEntity] = indexToRemove;
 		}
-		else 
+
+		// Remove the last element.
+		this.dense.pop();
+		this.components.pop();
+		delete this.sparse[entity];
+
+		// If the set is empty, we should also clear the sparse array.
+		if (this.dense.length === 0)
 		{
-			this.dense.length = 0;
-			this.components.length = 0;
-			this.sparse.length = 0;
+			this.sparse = [];
 		}
 	}
 
 	/**
 	 * Get the component of an entity.
 	 */
-	get(entity: number): T | undefined 
+	get(entity: number): T | undefined
 	{
 		if (!this.has(entity)) return undefined;
 		return this.components[this.sparse[entity]];
@@ -73,7 +77,7 @@ export class SparseSet<T>
 	/**
 	 * Check if an entity is in the set.
 	 */
-	has(entity: number): boolean 
+	has(entity: number): boolean
 	{
 		return this.sparse[entity] !== undefined;
 	}
@@ -81,19 +85,19 @@ export class SparseSet<T>
 	/**
 	 * Clear the set.
 	 */
-	clear() 
+	clear()
 	{
 		this.dense.length = 0;
 		this.components.length = 0;
-		this.sparse.length = 0;
+		this.sparse = [];
 	}
 
 	/**
 	 * Iterate over the set, returning a tuple [entity, component]
 	 */
-	*[Symbol.iterator](): Iterator<[entity: number, component: T]> 
+	*[Symbol.iterator](): Iterator<[entity: number, component: T]>
 	{
-		for (let i = 0; i < this.dense.length; i++) 
+		for (let i = 0; i < this.dense.length; i++)
 		{
 			yield [this.dense[i], this.components[i]];
 		}
