@@ -11,7 +11,8 @@
     "declaration": true,
     "strict": true,
     "paths": {
-      "elysiatech/*": ["../src/*"]
+      "elysiatech/*": ["../src/*"],
+      "elysiatech": ["../src/mod"]
     }
   }
 }
