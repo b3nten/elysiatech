@@ -1,16 +1,16 @@
 {
 	"name": "elysiatech",
 	"type": "module",
-	"version": "2.0.0-beta.49",
+	"version": "2.0.0-beta.50",
 	"publishConfig": {
 		"access": "public"
 	},
 	"scripts": {
 		"dev": "cd playground && vite",
-		"build": "pnpm test && tsx build",
+		"build": "vitest run && tsx build",
 		"lint": "eslint . --fix",
 		"test": "vitest",
-		"publish-npm": "npm publish . --tag beta"
+		"publish-npm": "vitest run && pnpm build && npm publish . --tag beta"
 	},
 	"dependencies": {
 		"bvh.js": "^0.0.13",

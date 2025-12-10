@@ -1,3 +1,5 @@
+// @ts-nocheck todo: type
+
 const POWER = 3;
 const BIT_MAX = 32;
 const BIN_BITS = 1 << POWER;
@@ -9,7 +11,7 @@ const bins = new Array(ITERATIONS);
 const bins_buffer = new ArrayBuffer((ITERATIONS + 1) * BIN_SIZE * 4);
 
 let c = 0;
-for (let i = 0; i < (ITERATIONS + 1); i++) 
+for (let i = 0; i < (ITERATIONS + 1); i++)
 {
 	bins[i] = new Uint32Array(bins_buffer, c, BIN_SIZE);
 	c += BIN_SIZE * 4;
@@ -23,7 +25,7 @@ export interface RadixSortOptions<T> {
     reversed?: boolean | undefined;
 }
 
-export const radixSort = <T = number>(arr: T[], opt?: RadixSortOptions<T>) => 
+export const radixSort = <T = number>(arr: T[], opt?: RadixSortOptions<T>) =>
 {
 	const len = arr.length;
 
@@ -35,22 +37,22 @@ export const radixSort = <T = number>(arr: T[], opt?: RadixSortOptions<T>) =>
 
 	let compare, accumulate, recurse;
 
-	if (options.reversed) 
+	if (options.reversed)
 	{
 		compare = (a, b) => a < b;
-		accumulate = (bin) => 
+		accumulate = (bin) =>
 		{
 			for (let j = BIN_SIZE - 2; j >= 0; j--)
 				bin[j] += bin[j + 1];
 		};
 
-		recurse = (cache, depth, start) => 
+		recurse = (cache, depth, start) =>
 		{
 			let prev = 0;
-			for (let j = BIN_MAX; j >= 0; j--) 
+			for (let j = BIN_MAX; j >= 0; j--)
 			{
 				const cur = cache[j], diff = cur - prev;
-				if (diff != 0) 
+				if (diff != 0)
 				{
 					if (diff > 32)
 						radixSortBlock(depth + 1, start + prev, diff);
@@ -61,22 +63,22 @@ export const radixSort = <T = number>(arr: T[], opt?: RadixSortOptions<T>) =>
 			}
 		};
 	}
-	else 
+	else
 	{
 		compare = (a, b) => a > b;
-		accumulate = (bin) => 
+		accumulate = (bin) =>
 		{
 			for (let j = 1; j < BIN_SIZE; j++)
 				bin[j] += bin[j - 1];
 		};
 
-		recurse = (cache, depth, start) => 
+		recurse = (cache, depth, start) =>
 		{
 			let prev = 0;
-			for (let j = 0; j < BIN_SIZE; j++) 
+			for (let j = 0; j < BIN_SIZE; j++)
 			{
 				const cur = cache[j], diff = cur - prev;
-				if (diff != 0) 
+				if (diff != 0)
 				{
 					if (diff > 32)
 						radixSortBlock(depth + 1, start + prev, diff);
@@ -88,36 +90,36 @@ export const radixSort = <T = number>(arr: T[], opt?: RadixSortOptions<T>) =>
 		};
 	}
 
-	const insertionSortBlock = (depth, start, len) => 
+	const insertionSortBlock = (depth, start, len) =>
 	{
 		const a = data[depth & 1];
 		const b = data[(depth + 1) & 1];
 
-		for (let j = start + 1; j < start + len; j++) 
+		for (let j = start + 1; j < start + len; j++)
 		{
 			const p = a[j], t = get(p) >>> 0;
 			let i = j;
-			while (i > start) 
+			while (i > start)
 			{
-				if (compare(get(a[i - 1]) >>> 0, t)) 
+				if (compare(get(a[i - 1]) >>> 0, t))
 				{
 					a[i] = a[--i];
 				}
-				else 
-				{ 
+				else
+				{
 					break;
 				}
 			}
 			a[i] = p;
 		}
 
-		if ((depth & 1) == 1) 
+		if ((depth & 1) == 1)
 		{
 			for (let i = start; i < start + len; i++) b[i] = a[i];
 		}
 	};
 
-	const radixSortBlock = (depth, start, len) => 
+	const radixSortBlock = (depth, start, len) =>
 	{
 		const a = data[depth & 1];
 		const b = data[(depth + 1) & 1];

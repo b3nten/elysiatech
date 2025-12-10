@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import {
 	Box3,
 	CoordinateSystem,
@@ -60,13 +62,13 @@ function ascIdSort(a: number, b: number)
 	return a - b;
 }
 /** @internal */
-export function sortOpaque(a: MultiDrawRenderItem, b: MultiDrawRenderItem): number 
+export function sortOpaque(a: MultiDrawRenderItem, b: MultiDrawRenderItem): number
 {
 	return a.z - b.z;
 }
 
 /** @internal */
-export function sortTransparent(a: MultiDrawRenderItem, b: MultiDrawRenderItem): number 
+export function sortTransparent(a: MultiDrawRenderItem, b: MultiDrawRenderItem): number
 {
 	return b.z - a.z;
 }
@@ -1428,7 +1430,7 @@ export class BatchedMeshBVH
 	 * @param margin The margin applied for bounding box calculations (default is 0).
 	 * @param accurateCulling Flag to enable accurate frustum culling without considering margin (default is true).
 	 */
-	constructor(target: BatchedLodMesh, coordinateSystem: CoordinateSystem, margin = 0, accurateCulling = true) 
+	constructor(target: BatchedLodMesh, coordinateSystem: CoordinateSystem, margin = 0, accurateCulling = true)
 	{
 		this.target = target;
 		this.accurateCulling = accurateCulling;
@@ -1441,7 +1443,7 @@ export class BatchedMeshBVH
 	 * Builds the BVH from the target mesh's instances using a top-down construction method.
 	 * This approach is more efficient and accurate compared to incremental methods, which add one instance at a time.
 	 */
-	public create(): void 
+	public create(): void
 	{
 		const count = this.target.instanceCount;
 		const instancesArrayCount = this.target._instanceInfo.length; // TODO this may change.. don't like it too much
@@ -1452,7 +1454,7 @@ export class BatchedMeshBVH
 
 		this.clear();
 
-		for (let i = 0; i < instancesArrayCount; i++) 
+		for (let i = 0; i < instancesArrayCount; i++)
 		{
 			if (!instancesInfo[i].active) continue;
 			boxes[index] = this.getBox(i, new Float32Array(6));
@@ -1460,7 +1462,7 @@ export class BatchedMeshBVH
 			index++;
 		}
 
-		this.bvh.createFromArray(objects as unknown as number[], boxes, (node) => 
+		this.bvh.createFromArray(objects as unknown as number[], boxes, (node) =>
 		{
 			this.nodesMap.set(node.object!, node);
 		}, this._margin);
@@ -1470,7 +1472,7 @@ export class BatchedMeshBVH
 	 * Inserts an instance into the BVH.
 	 * @param id The id of the instance to insert.
 	 */
-	public insert(id: number): void 
+	public insert(id: number): void
 	{
 		const node = this.bvh.insert(id, this.getBox(id, new Float32Array(6)), this._margin);
 		this.nodesMap.set(id, node);
@@ -1480,17 +1482,17 @@ export class BatchedMeshBVH
 	 * Inserts a range of instances into the BVH.
 	 * @param ids An array of ids to insert.
 	 */
-	public insertRange(ids: number[]): void 
+	public insertRange(ids: number[]): void
 	{
 		const count = ids.length;
 		const boxes: Float32Array[] = new Array(count);
 
-		for (let i = 0; i < count; i++) 
+		for (let i = 0; i < count; i++)
 		{
 			boxes[i] = this.getBox(ids[i], new Float32Array(6));
 		}
 
-		this.bvh.insertRange(ids, boxes, this._margin, (node) => 
+		this.bvh.insertRange(ids, boxes, this._margin, (node) =>
 		{
 			this.nodesMap.set(node.object!, node);
 		});
@@ -1500,7 +1502,7 @@ export class BatchedMeshBVH
 	 * Moves an instance within the BVH.
 	 * @param id The id of the instance to move.
 	 */
-	public move(id: number): void 
+	public move(id: number): void
 	{
 		const node = this.nodesMap.get(id);
 		if (!node) return;
@@ -1512,7 +1514,7 @@ export class BatchedMeshBVH
 	 * Deletes an instance from the BVH.
 	 * @param id The id of the instance to delete.
 	 */
-	public delete(id: number): void 
+	public delete(id: number): void
 	{
 		const node = this.nodesMap.get(id);
 		if (!node) return;
@@ -1523,7 +1525,7 @@ export class BatchedMeshBVH
 	/**
 	 * Clears the BVH.
 	 */
-	public clear(): void 
+	public clear(): void
 	{
 		this.bvh.clear();
 		this.nodesMap.clear();
@@ -1534,11 +1536,11 @@ export class BatchedMeshBVH
 	 * @param projScreenMatrix The projection screen matrix for frustum culling.
 	 * @param onFrustumIntersection Callback function invoked when an instance intersects the frustum.
 	 */
-	public frustumCulling(projScreenMatrix: Matrix4, onFrustumIntersection: onFrustumIntersectionCallback<{}, number>): void 
+	public frustumCulling(projScreenMatrix: Matrix4, onFrustumIntersection: onFrustumIntersectionCallback<{}, number>): void
 	{
-		if (this._margin > 0 && this.accurateCulling) 
+		if (this._margin > 0 && this.accurateCulling)
 		{
-			this.bvh.frustumCulling(projScreenMatrix.elements, (node, frustum, mask) => 
+			this.bvh.frustumCulling(projScreenMatrix.elements, (node, frustum, mask) =>
 			{
 				if (frustum?.isIntersectedMargin(node.box, mask!, this._margin))
 				{
@@ -1546,7 +1548,7 @@ export class BatchedMeshBVH
 				}
 			});
 		}
-		else 
+		else
 		{
 			this.bvh.frustumCulling(projScreenMatrix.elements, onFrustumIntersection);
 		}
@@ -1557,7 +1559,7 @@ export class BatchedMeshBVH
 	 * @param raycaster The raycaster used for raycasting.
 	 * @param onIntersection Callback function invoked when a ray intersects an instance.
 	 */
-	public raycast(raycaster: Raycaster, onIntersection: onIntersectionRayCallback<number>): void 
+	public raycast(raycaster: Raycaster, onIntersection: onIntersectionRayCallback<number>): void
 	{
 		const ray = raycaster.ray;
 		const origin = this._origin;
@@ -1576,14 +1578,14 @@ export class BatchedMeshBVH
 	 * @param onIntersection Callback function invoked when an intersection occurs.
 	 * @returns `True` if there is an intersection, otherwise `false`.
 	 */
-	public intersectBox(target: Box3, onIntersection: onIntersectionCallback<number>): boolean 
+	public intersectBox(target: Box3, onIntersection: onIntersectionCallback<number>): boolean
 	{
 		const array = this._boxArray;
 		box3ToArray(target, array);
 		return this.bvh.intersectsBox(array, onIntersection);
 	}
 
-	protected getBox(id: number, array: Float32Array): Float32Array 
+	protected getBox(id: number, array: Float32Array): Float32Array
 	{
 		const target = this.target;
 		const geometryId = target._instanceInfo[id].geometryIndex;

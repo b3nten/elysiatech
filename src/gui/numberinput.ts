@@ -42,7 +42,7 @@ export class ElysiaNumberInput extends ElysiaElement
 		`
 	}
 
-	#onInput(e)
+	#onInput(e: InputEvent)
 	{
 		console.log(e)
 	}
