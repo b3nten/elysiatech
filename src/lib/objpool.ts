@@ -19,14 +19,22 @@ interface ObjectPoolOptions<T> {
  * - resetObject: An optional function to reset objects when they are freed. Also called on initial creation.
  * - growthStrategy: An optional function to determine how many objects to add when the pool grows.
  */
-export class ObjectPool<T> 
+export class ObjectPool<T>
 {
-	constructor(options: ObjectPoolOptions<T>) 
+	constructor(options: ObjectPoolOptions<T>)
 	{
+		this.alloc = this.alloc.bind(this);
+		this.free = this.free.bind(this);
+		this.freeAll = this.freeAll.bind(this);
+
+		if (options.growthStrategy)
+		{
+			this.growthStrategy = options.growthStrategy;
+		}
 		this.createObject = options.createObject;
 		this.resetObject = options.resetObject;
 
-		for (let index = 0; index < options.initialSize; index++) 
+		for (let index = 0; index < options.initialSize; index++)
 		{
 			const object = this.createObject(index);
 			this.resetObject?.(object);
@@ -35,32 +43,30 @@ export class ObjectPool<T>
 	}
 
 	/** Allocate an object from the pool */
-	alloc() 
+	alloc()
 	{
 		let object = this.inactive.pop();
 		// No more objects in the pool
-		if (!object) 
+		if (!object)
 		{
-			object = this.createObject(this.size);
-		}
-		// double the pool size
-		for (let i = 0; i < this.growthStrategy(this.size); i++) 
-		{
-			for (let index = 0; index < this.active.size; index++) 
+			const currentSize = this.size;
+			const growthAmount = this.growthStrategy(currentSize);
+			for (let index = 0; index < growthAmount; index++)
 			{
-				const object = this.createObject(index);
-				this.resetObject?.(object);
-				this.inactive.push(object);
+				const newObject = this.createObject(currentSize + index);
+				this.resetObject?.(newObject);
+				this.inactive.push(newObject);
 			}
+			object = this.inactive.pop()!;
 		}
 		this.active.add(object);
 		return object;
 	}
 
 	/** Release an object back into the pool */
-	free(object: T) 
+	free(object: T)
 	{
-		if (this.active.has(object)) 
+		if (this.active.has(object))
 		{
 			this.active.delete(object);
 			this.inactive.push(object);
@@ -69,29 +75,30 @@ export class ObjectPool<T>
 	}
 
 	/** Release all active objects back into the pool */
-	freeAll() 
+	freeAll()
 	{
-		for (const activeObject of this.active) 
+		for (const activeObject of this.active)
 		{
 			this.inactive.push(activeObject);
+			this.resetObject?.(activeObject);
 		}
 		this.active.clear();
 	}
 
 	/** Total number of objects managed by the pool */
-	get size() 
+	get size()
 	{
 		return this.inactive.length + this.active.size;
 	}
 
 	/** Number of active objects */
-	get sizeOfActive() 
+	get sizeOfActive()
 	{
 		return this.active.size;
 	}
 
 	/** Number of inactive objects */
-	get sizeOfReserve() 
+	get sizeOfReserve()
 	{
 		return this.inactive.length;
 	}
