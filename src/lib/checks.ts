@@ -75,7 +75,7 @@ export function isConstructor<T>(
 	...args: any[]
 ) => T
 {
-	return typeof value === "function" && value.prototype;
+	return typeof value === "function" && "prototype" in value;
 }
 
 export function isPrimitive(val: unknown): val is Primitive
