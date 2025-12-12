@@ -1,9 +1,11 @@
 import { AutoMap } from './automap';
 import { describe, suite, test, assert } from "vitest"
 
-describe('AutoMap', () => {
+describe('AutoMap', () => 
+{
 
-	test('should create and return a value if key does not exist', () => {
+	test('should create and return a value if key does not exist', () => 
+	{
 		const map = new AutoMap<string, number>(() => 10);
 		assert.strictEqual(map.has('foo'), false);
 		const value = map.get('foo');
@@ -11,9 +13,11 @@ describe('AutoMap', () => {
 		assert.strictEqual(map.has('foo'), true);
 	});
 
-	test('should return existing value if key exists', () => {
+	test('should return existing value if key exists', () => 
+	{
 		let factoryCalls = 0;
-		const map = new AutoMap<string, number>(() => {
+		const map = new AutoMap<string, number>(() => 
+		{
 			factoryCalls++;
 			return 10;
 		});
@@ -22,7 +26,8 @@ describe('AutoMap', () => {
 		assert.strictEqual(map.get('foo'), 10)
 	});
 
-	test('should work with object references', () => {
+	test('should work with object references', () => 
+	{
 		const map = new AutoMap<string, { count: number }>(() => ({ count: 0 }));
 		const obj1 = map.get('a');
 		assert.deepStrictEqual(obj1, { count: 0 });
@@ -32,14 +37,16 @@ describe('AutoMap', () => {
 		assert.strictEqual(obj2.count, 1);
 	});
 
-	test('should work with array references', () => {
+	test('should work with array references', () => 
+	{
 		const map = new AutoMap<string, string[]>(() => []);
 		map.get('list').push('one');
 		map.get('list').push('two');
 		assert.deepStrictEqual(map.get('list'), ['one', 'two']);
 	});
 
-	test('should behave like a normal Map for other methods', () => {
+	test('should behave like a normal Map for other methods', () => 
+	{
 		const map = new AutoMap<string, number>(() => 0);
 		map.set('a', 1);
 		map.set('b', 2);

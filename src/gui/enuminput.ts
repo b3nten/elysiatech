@@ -1,5 +1,6 @@
 import { ElysiaElement } from "./element";
 
 
-export class ElysiaEnumInput extends ElysiaElement {
+export class ElysiaEnumInput extends ElysiaElement 
+{
 }

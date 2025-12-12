@@ -4,8 +4,10 @@ import { AutoMap } from "../lib/automap";
 import { createEvent } from "./create";
 
 
-describe("EventManager", () => {
-	it("should register a listener and notify it with the correct payload", () => {
+describe("EventManager", () => 
+{
+	it("should register a listener and notify it with the correct payload", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -17,7 +19,8 @@ describe("EventManager", () => {
 		expect(listener).toHaveBeenCalledWith("Hello, World!");
 	});
 
-	it("should correctly handle notifications for events that have no payload", () => {
+	it("should correctly handle notifications for events that have no payload", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<undefined>("testEventNoPayload");
 		const listener = vi.fn();
@@ -29,7 +32,8 @@ describe("EventManager", () => {
 		expect(listener).toHaveBeenCalledWith(undefined);
 	});
 
-	it("should unregister a listener using the unregister method", () => {
+	it("should unregister a listener using the unregister method", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -41,7 +45,8 @@ describe("EventManager", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should return a function from register() that unregisters the listener when called", () => {
+	it("should return a function from register() that unregisters the listener when called", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -53,7 +58,8 @@ describe("EventManager", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should notify all registered listeners for a single event", () => {
+	it("should notify all registered listeners for a single event", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<number>("multiListenerEvent");
 		const listener1 = vi.fn();
@@ -69,7 +75,8 @@ describe("EventManager", () => {
 		expect(listener2).toHaveBeenCalledWith(42);
 	});
 
-	it("should keep listeners for different events separate", () => {
+	it("should keep listeners for different events separate", () => 
+	{
 		const manager = new EventManager();
 		const eventA = createEvent<string>("eventA");
 		const eventB = createEvent<boolean>("eventB");
@@ -90,14 +97,16 @@ describe("EventManager", () => {
 		expect(listenerB).toHaveBeenCalledWith(true);
 	});
 
-	it("should not throw an error when notifying an event that has no listeners", () => {
+	it("should not throw an error when notifying an event that has no listeners", () => 
+	{
 		const manager = new EventManager();
 		const lonelyEvent = createEvent<string>("lonelyEvent");
 
 		expect(() => manager.notify(lonelyEvent, "payload")).not.toThrow();
 	});
 
-	it("should remove all listeners for all events when clear() is called", () => {
+	it("should remove all listeners for all events when clear() is called", () => 
+	{
 		const manager = new EventManager();
 		const eventA = createEvent<string>("eventA");
 		const eventB = createEvent<number>("eventB");
@@ -116,7 +125,8 @@ describe("EventManager", () => {
 		expect(listenerB).not.toHaveBeenCalled();
 	});
 
-	it("should have its methods bound to the instance, allowing them to be destructured and called", () => {
+	it("should have its methods bound to the instance, allowing them to be destructured and called", () => 
+	{
 		const manager = new EventManager();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();

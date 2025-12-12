@@ -44,7 +44,7 @@ export class ElysiaElement extends LitElement
 	protected updated(_changedProperties: PropertyValues): void
 	{
 		super.updated(_changedProperties)
-    this.onUpdate?.()
+		this.onUpdate?.()
 	}
 
 	disconnectedCallback()
@@ -61,7 +61,8 @@ export class ElysiaElement extends LitElement
 			return true;
 		}
 
-		for (let i = 0; i < a.length; i++) {
+		for (let i = 0; i < a.length; i++) 
+		{
 			const prev = a[i], next = b[i];
 
 			// functions are compared by name
@@ -99,7 +100,8 @@ export class ElysiaElement extends LitElement
 		return false;
 	}
 
-	#diff() {
+	#diff() 
+	{
 		const renderResult = this.render();
 		if (isLitTemplateResult(renderResult))
 		{
@@ -114,7 +116,8 @@ export class ElysiaElement extends LitElement
 	#lastRenderValues: unknown[] = [];
 }
 
-function isLitTemplateResult(value: unknown): value is TemplateResult {
+function isLitTemplateResult(value: unknown): value is TemplateResult 
+{
 	return !!value && (typeof value === "object") && ("_$litType$" in value);
 }
 

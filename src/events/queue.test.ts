@@ -2,8 +2,10 @@ import { describe, it, expect, vi } from "vitest";
 import { EventQueue } from "./queue";
 import { createEvent } from "./create";
 
-describe("EventQueue", () => {
-	it("should subscribe a listener, push an event, and dispatch it", () => {
+describe("EventQueue", () => 
+{
+	it("should subscribe a listener, push an event, and dispatch it", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -16,7 +18,8 @@ describe("EventQueue", () => {
 		expect(listener).toHaveBeenCalledTimes(1);
 	});
 
-	it("should dispatch all events in the queue and then clear it with dispatchAndClear", () => {
+	it("should dispatch all events in the queue and then clear it with dispatchAndClear", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -33,7 +36,8 @@ describe("EventQueue", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should clear the queue without dispatching events", () => {
+	it("should clear the queue without dispatching events", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -46,7 +50,8 @@ describe("EventQueue", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should unsubscribe a listener using the unsubscribe method", () => {
+	it("should unsubscribe a listener using the unsubscribe method", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -59,7 +64,8 @@ describe("EventQueue", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should return a function from subscribe() that unsubscribes the listener", () => {
+	it("should return a function from subscribe() that unsubscribes the listener", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();
@@ -72,7 +78,8 @@ describe("EventQueue", () => {
 		expect(listener).not.toHaveBeenCalled();
 	});
 
-	it("should correctly handle the double buffer (events pushed during dispatch are queued for next frame)", () => {
+	it("should correctly handle the double buffer (events pushed during dispatch are queued for next frame)", () => 
+	{
 		const queue = new EventQueue();
 		const eventA = createEvent<string>("eventA");
 		const eventB = createEvent<string>("eventB");
@@ -80,7 +87,8 @@ describe("EventQueue", () => {
 		const listenerB = vi.fn();
 
 		// When listenerA is called, it pushes eventB to the queue.
-		listenerA.mockImplementation(() => {
+		listenerA.mockImplementation(() => 
+		{
 			queue.push(eventB, "payloadB");
 		});
 
@@ -104,7 +112,8 @@ describe("EventQueue", () => {
 		expect(listenerB).toHaveBeenCalledWith("payloadB");
 	});
 
-	it("should be iterable, yielding all events and payloads in the current queue", () => {
+	it("should be iterable, yielding all events and payloads in the current queue", () => 
+	{
 		const queue = new EventQueue();
 		const eventA = createEvent<string>("eventA");
 		const eventB = createEvent<number>("eventB");
@@ -119,10 +128,12 @@ describe("EventQueue", () => {
 		expect(events[1]).toEqual([eventB, 2]);
 	});
 
-	it("should handle errors within listeners gracefully", () => {
+	it("should handle errors within listeners gracefully", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
-		const faultyListener = vi.fn(() => {
+		const faultyListener = vi.fn(() => 
+		{
 			throw new Error("Listener Error");
 		});
 
@@ -133,7 +144,8 @@ describe("EventQueue", () => {
 		expect(faultyListener).toHaveBeenCalledOnce();
 	});
 
-	it("should have its methods bound to the instance", () => {
+	it("should have its methods bound to the instance", () => 
+	{
 		const queue = new EventQueue();
 		const testEvent = createEvent<string>("testEvent");
 		const listener = vi.fn();

@@ -15,10 +15,10 @@ export let clamp = (value: number, min: number, max: number): number =>
  * @param toMin
  * @param toMax
  */
- export function remapRange(value: number, fromMin: number, fromMax: number, toMin: number, toMax: number): number
- {
+export function remapRange(value: number, fromMin: number, fromMax: number, toMin: number, toMax: number): number
+{
 	const fromRange = fromMax - fromMin;
 	const toRange = toMax - toMin;
 	const scaledValue = (value - fromMin) / fromRange;
 	return clamp(toMin + (scaledValue * toRange), toMin, toMax);
- }
+}

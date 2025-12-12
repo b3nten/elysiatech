@@ -18,7 +18,8 @@ const assets = await new AssetLoader({
 
 const canvas = cast<HTMLCanvasElement>(mustExist(document.getElementById("viewport")))
 
-function init(world: World) {
+function init(world: World) 
+{
 	// env
 	world.addSingletonComponents(
 		new Three.AmbientLight("white", 2),

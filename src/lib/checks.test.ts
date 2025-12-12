@@ -17,13 +17,16 @@ import {
 	isVoid,
 } from "./checks";
 
-describe("isBoolean", () => {
-	it("should return true for booleans", () => {
+describe("isBoolean", () => 
+{
+	it("should return true for booleans", () => 
+	{
 		expect(isBoolean(true)).toBe(true);
 		expect(isBoolean(false)).toBe(true);
 	});
 
-	it("should return false for non-booleans", () => {
+	it("should return false for non-booleans", () => 
+	{
 		expect(isBoolean(0)).toBe(false);
 		expect(isBoolean("true")).toBe(false);
 		expect(isBoolean(null)).toBe(false);
@@ -33,8 +36,10 @@ describe("isBoolean", () => {
 	});
 });
 
-describe("isNumber", () => {
-	it("should return true for numbers", () => {
+describe("isNumber", () => 
+{
+	it("should return true for numbers", () => 
+	{
 		expect(isNumber(0)).toBe(true);
 		expect(isNumber(123)).toBe(true);
 		expect(isNumber(-123)).toBe(true);
@@ -43,7 +48,8 @@ describe("isNumber", () => {
 		expect(isNumber(NaN)).toBe(true);
 	});
 
-	it("should return false for non-numbers", () => {
+	it("should return false for non-numbers", () => 
+	{
 		expect(isNumber("123")).toBe(false);
 		expect(isNumber(null)).toBe(false);
 		expect(isNumber(undefined)).toBe(false);
@@ -52,13 +58,16 @@ describe("isNumber", () => {
 	});
 });
 
-describe("isString", () => {
-	it("should return true for strings", () => {
+describe("isString", () => 
+{
+	it("should return true for strings", () => 
+	{
 		expect(isString("")).toBe(true);
 		expect(isString("hello")).toBe(true);
 	});
 
-	it("should return false for non-strings", () => {
+	it("should return false for non-strings", () => 
+	{
 		expect(isString(123)).toBe(false);
 		expect(isString(null)).toBe(false);
 		expect(isString(undefined)).toBe(false);
@@ -67,12 +76,15 @@ describe("isString", () => {
 	});
 });
 
-describe("isDate", () => {
-	it("should return true for Date objects", () => {
+describe("isDate", () => 
+{
+	it("should return true for Date objects", () => 
+	{
 		expect(isDate(new Date())).toBe(true);
 	});
 
-	it("should return false for non-Date objects", () => {
+	it("should return false for non-Date objects", () => 
+	{
 		expect(isDate(Date.now())).toBe(false); // it's a number
 		expect(isDate("2023-01-01")).toBe(false);
 		expect(isDate(null)).toBe(false);
@@ -81,14 +93,17 @@ describe("isDate", () => {
 	});
 });
 
-describe("isRecord", () => {
-	it("should return true for objects that are records", () => {
+describe("isRecord", () => 
+{
+	it("should return true for objects that are records", () => 
+	{
 		expect(isRecord({})).toBe(true);
 		expect(isRecord({ a: 1 })).toBe(true);
 		expect(isRecord(new Date())).toBe(true);
 	});
 
-	it("should return false for non-record values", () => {
+	it("should return false for non-record values", () => 
+	{
 		expect(isRecord(null)).toBe(false);
 		expect(isRecord([])).toBe(false);
 		expect(isRecord("string")).toBe(false);
@@ -98,13 +113,16 @@ describe("isRecord", () => {
 	});
 });
 
-describe("isArray", () => {
-	it("should return true for arrays", () => {
+describe("isArray", () => 
+{
+	it("should return true for arrays", () => 
+	{
 		expect(isArray([])).toBe(true);
 		expect(isArray([1, 2, 3])).toBe(true);
 	});
 
-	it("should return false for non-arrays", () => {
+	it("should return false for non-arrays", () => 
+	{
 		expect(isArray({})).toBe(false);
 		expect(isArray("array")).toBe(false);
 		expect(isArray(null)).toBe(false);
@@ -112,73 +130,90 @@ describe("isArray", () => {
 	});
 });
 
-describe("isFunction", () => {
-	it("should return true for functions", () => {
+describe("isFunction", () => 
+{
+	it("should return true for functions", () => 
+	{
 		expect(isFunction(() => {})).toBe(true);
 		expect(isFunction(function() {})).toBe(true);
 		class MyClass {}
 		expect(isFunction(MyClass)).toBe(true);
 	});
 
-	it("should return false for non-functions", () => {
+	it("should return false for non-functions", () => 
+	{
 		expect(isFunction({})).toBe(false);
 		expect(isFunction([])).toBe(false);
 		expect(isFunction(null)).toBe(false);
 	});
 });
 
-describe("isUndefined", () => {
-	it("should return true for undefined", () => {
+describe("isUndefined", () => 
+{
+	it("should return true for undefined", () => 
+	{
 		expect(isUndefined(undefined)).toBe(true);
 	});
 
-	it("should return false for non-undefined values", () => {
+	it("should return false for non-undefined values", () => 
+	{
 		expect(isUndefined(null)).toBe(false);
 		expect(isUndefined(0)).toBe(false);
 		expect(isUndefined("")).toBe(false);
 	});
 });
 
-describe("isNull", () => {
-	it("should return true for null", () => {
+describe("isNull", () => 
+{
+	it("should return true for null", () => 
+	{
 		expect(isNull(null)).toBe(true);
 	});
 
-	it("should return false for non-null values", () => {
+	it("should return false for non-null values", () => 
+	{
 		expect(isNull(undefined)).toBe(false);
 		expect(isNull(0)).toBe(false);
 		expect(isNull("")).toBe(false);
 	});
 });
 
-describe("isVoid", () => {
-	it("should return true for null and undefined", () => {
+describe("isVoid", () => 
+{
+	it("should return true for null and undefined", () => 
+	{
 		expect(isVoid(null)).toBe(true);
 		expect(isVoid(undefined)).toBe(true);
 	});
 
-	it("should return false for other values", () => {
+	it("should return false for other values", () => 
+	{
 		expect(isVoid(0)).toBe(false);
 		expect(isVoid("")).toBe(false);
 		expect(isVoid(false)).toBe(false);
 	});
 });
 
-describe("isNullish", () => {
-	it("should return true for null and undefined", () => {
+describe("isNullish", () => 
+{
+	it("should return true for null and undefined", () => 
+	{
 		expect(isNullish(null)).toBe(true);
 		expect(isNullish(undefined)).toBe(true);
 	});
 
-	it("should return false for other values", () => {
+	it("should return false for other values", () => 
+	{
 		expect(isNullish(0)).toBe(false);
 		expect(isNullish("")).toBe(false);
 		expect(isNullish(false)).toBe(false);
 	});
 });
 
-describe("isFalsy", () => {
-	it("should return true for falsy values", () => {
+describe("isFalsy", () => 
+{
+	it("should return true for falsy values", () => 
+	{
 		expect(isFalsy(false)).toBe(true);
 		expect(isFalsy(0)).toBe(true);
 		expect(isFalsy("")).toBe(true);
@@ -187,7 +222,8 @@ describe("isFalsy", () => {
 		expect(isFalsy(0n)).toBe(true);
 	});
 
-	it("should return false for truthy values", () => {
+	it("should return false for truthy values", () => 
+	{
 		expect(isFalsy(true)).toBe(false);
 		expect(isFalsy(1)).toBe(false);
 		expect(isFalsy("hello")).toBe(false);
@@ -196,31 +232,37 @@ describe("isFalsy", () => {
 	});
 });
 
-describe("isExactly", () => {
+describe("isExactly", () => 
+{
 	const a = {};
 	const b = {};
-	it("should return true for strictly equal values", () => {
+	it("should return true for strictly equal values", () => 
+	{
 		expect(isExactly(1, 1)).toBe(true);
 		expect(isExactly("a", "a")).toBe(true);
 		expect(isExactly(a, a)).toBe(true);
 	});
 
-	it("should return false for non-strictly equal values", () => {
+	it("should return false for non-strictly equal values", () => 
+	{
 		expect(isExactly(1, "1" as any)).toBe(false);
 		expect(isExactly(a, b)).toBe(false);
 		expect(isExactly(0, false as any)).toBe(false);
 	});
 });
 
-describe("isConstructor", () => {
-	it("should return true for constructors", () => {
+describe("isConstructor", () => 
+{
+	it("should return true for constructors", () => 
+	{
 		expect(isConstructor(class {})).toBe(true);
 		expect(isConstructor(function() {})).toBe(true); // Functions have prototypes
 		expect(isConstructor(Date)).toBe(true);
 		expect(isConstructor(Object)).toBe(true);
 	});
 
-	it("should return false for non-constructors", () => {
+	it("should return false for non-constructors", () => 
+	{
 		expect(isConstructor(() => {})).toBe(false); // Arrow functions don't have prototype
 		expect(isConstructor({})).toBe(false);
 		expect(isConstructor(null)).toBe(false);
@@ -229,8 +271,10 @@ describe("isConstructor", () => {
 	});
 });
 
-describe("isPrimitive", () => {
-	it("should return true for primitive values", () => {
+describe("isPrimitive", () => 
+{
+	it("should return true for primitive values", () => 
+	{
 		expect(isPrimitive(null)).toBe(true);
 		expect(isPrimitive(undefined)).toBe(true);
 		expect(isPrimitive("hello")).toBe(true);
@@ -240,7 +284,8 @@ describe("isPrimitive", () => {
 		expect(isPrimitive(Symbol("id"))).toBe(true);
 	});
 
-	it("should return false for non-primitive values", () => {
+	it("should return false for non-primitive values", () => 
+	{
 		expect(isPrimitive({})).toBe(false);
 		expect(isPrimitive([])).toBe(false);
 		expect(isPrimitive(() => {})).toBe(false);

@@ -203,7 +203,6 @@ export function assertOneOfType<T>(
 
 export function assertInstanceOf<T>(
 	input: unknown,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	constructor: new (...args: any[]) => T,
 	message = expectedToBe("an instance of given constructor"),
 ): asserts input is T

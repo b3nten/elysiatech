@@ -7,19 +7,24 @@ interface TestObject {
 	active: boolean;
 }
 
-describe("ObjectPool", () => {
+describe("ObjectPool", () => 
+{
 	const createObject = vi.fn((id: number): TestObject => ({ id, active: true }));
-	const resetObject = vi.fn((obj: TestObject) => {
+	const resetObject = vi.fn((obj: TestObject) => 
+	{
 		obj.active = false;
 	});
 
-	beforeEach(() => {
+	beforeEach(() => 
+	{
 		createObject.mockClear();
 		resetObject.mockClear();
 	});
 
-	describe("Initialization", () => {
-		it("should create a pool with the correct initial size", () => {
+	describe("Initialization", () => 
+	{
+		it("should create a pool with the correct initial size", () => 
+		{
 			const pool = new ObjectPool({
 				initialSize: 10,
 				createObject,
@@ -29,7 +34,8 @@ describe("ObjectPool", () => {
 			expect(pool.sizeOfActive).toBe(0);
 		});
 
-		it("should call createObject for each initial object", () => {
+		it("should call createObject for each initial object", () => 
+		{
 			new ObjectPool({
 				initialSize: 5,
 				createObject,
@@ -42,7 +48,8 @@ describe("ObjectPool", () => {
 			expect(createObject).toHaveBeenCalledWith(4);
 		});
 
-		it("should call resetObject for each initial object if provided", () => {
+		it("should call resetObject for each initial object if provided", () => 
+		{
 			new ObjectPool({
 				initialSize: 3,
 				createObject,
@@ -52,15 +59,18 @@ describe("ObjectPool", () => {
 		});
 	});
 
-	describe("Allocation and Freeing", () => {
-		it("should allocate an object from the pool", () => {
+	describe("Allocation and Freeing", () => 
+	{
+		it("should allocate an object from the pool", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 1, createObject });
 			const obj = pool.alloc();
 			expect(obj).toBeDefined();
 			expect(obj.id).toBe(0);
 		});
 
-		it("should move an object from inactive to active on alloc", () => {
+		it("should move an object from inactive to active on alloc", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 5, createObject });
 			expect(pool.sizeOfReserve).toBe(5);
 			expect(pool.sizeOfActive).toBe(0);
@@ -71,7 +81,8 @@ describe("ObjectPool", () => {
 			expect(pool.sizeOfActive).toBe(1);
 		});
 
-		it("should free an active object, moving it back to the pool", () => {
+		it("should free an active object, moving it back to the pool", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 1, createObject });
 			const obj = pool.alloc();
 
@@ -84,7 +95,8 @@ describe("ObjectPool", () => {
 			expect(pool.sizeOfReserve).toBe(1);
 		});
 
-		it("should call resetObject when freeing an object", () => {
+		it("should call resetObject when freeing an object", () => 
+		{
 			const pool = new ObjectPool({
 				initialSize: 1,
 				createObject,
@@ -98,7 +110,8 @@ describe("ObjectPool", () => {
 			expect(resetObject).toHaveBeenCalledWith(obj);
 		});
 
-		it("should not free an object that is not active", () => {
+		it("should not free an object that is not active", () => 
+		{
 			const pool = new ObjectPool({
 				initialSize: 2,
 				createObject,
@@ -115,7 +128,8 @@ describe("ObjectPool", () => {
 			expect(resetObject).not.toHaveBeenCalled();
 		});
 
-		it("should not allow freeing the same object twice", () => {
+		it("should not allow freeing the same object twice", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 1, createObject });
 			const obj = pool.alloc();
 			pool.free(obj);
@@ -126,8 +140,10 @@ describe("ObjectPool", () => {
 		});
 	});
 
-	describe("Automatic Growth", () => {
-		it("should grow the pool when it runs out of objects", () => {
+	describe("Automatic Growth", () => 
+	{
+		it("should grow the pool when it runs out of objects", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 1, createObject });
 			expect(pool.size).toBe(1);
 
@@ -141,8 +157,10 @@ describe("ObjectPool", () => {
 			expect(pool.sizeOfReserve).toBeGreaterThan(0);
 		});
 
-		it("should use a custom growth strategy", () => {
-			const growthStrategy = vi.fn((currentSize: number) => {
+		it("should use a custom growth strategy", () => 
+		{
+			const growthStrategy = vi.fn((currentSize: number) => 
+			{
 				return currentSize + 5; // Always add 5 new objects
 			});
 			const pool = new ObjectPool({
@@ -160,8 +178,10 @@ describe("ObjectPool", () => {
 		});
 	});
 
-	describe("freeAll", () => {
-		it("should free all active objects", () => {
+	describe("freeAll", () => 
+	{
+		it("should free all active objects", () => 
+		{
 			const pool = new ObjectPool({
 				initialSize: 5,
 				createObject,
@@ -181,7 +201,8 @@ describe("ObjectPool", () => {
 			expect(pool.sizeOfReserve).toBe(5);
 		});
 
-		it("should do nothing if no objects are active", () => {
+		it("should do nothing if no objects are active", () => 
+		{
 			const pool = new ObjectPool({ initialSize: 5, createObject });
 			pool.freeAll();
 			expect(pool.sizeOfActive).toBe(0);
