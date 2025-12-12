@@ -5,7 +5,7 @@ import { World } from "../mod"
 export interface IRenderPipeline
 {
 	/** Create a custom webgl renderer, or else use the default */
-	createRenderer?(world: World): WebGLRenderer
+	createRenderer?(canvas: HTMLCanvasElement, world: World): WebGLRenderer
 	/** Configure the WebglRenderer, or else use provided default configuration. */
 	configure?(renderer: WebGLRenderer, world: World): void
 	render?(

@@ -44,7 +44,7 @@ export class Engine
 
 	setupCoreComponents = (world: World) =>
 	{
-		const renderer = this.renderPipeline?.createRenderer?.(world)
+		const renderer = this.renderPipeline?.createRenderer?.(this.canvas, world)
 			?? new WebGLRenderer({
 				canvas: this.canvas,
 				antialias: true,
