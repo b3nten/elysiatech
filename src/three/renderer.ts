@@ -3,31 +3,32 @@ import { System, type EntityID } from "../ecs/mod";
 import { Instrumentor, warnOnce } from "../lib/mod";
 import { Viewport } from "./viewport";
 import { ActiveCameraComponent } from "./components";
+import { WebGPURenderer } from "three/webgpu";
 
 export class ThreeRenderSystem extends System
 {
 	override update(delta: number)
 	{
-		Instrumentor.start("ThreeBasicRenderSystem::update");
+		Instrumentor.start("ThreeRenderSystem::update");
 
-		Instrumentor.start("ThreeBasicRenderSystem::update::resolveComponents");
+		Instrumentor.start("ThreeRenderSystem::update::resolveComponents");
 
 		const scene = this.world.getSingletonComponent(Scene);
 		if (!scene)
 		{
-			return warnOnce( "ThreeBasicRenderSystem: Requires a SceneComponent. Skipping update.");
+			return warnOnce( "ThreeRenderSystem: Requires a SceneComponent. Skipping update.");
 		}
 
-		const renderer = this.world.getSingletonComponent(WebGLRenderer);
+		const renderer = this.world.getSingletonComponent(WebGPURenderer) ?? this.world.getSingletonComponent(WebGLRenderer);
 		if (!renderer)
 		{
-			return warnOnce("ThreeBasicRenderSystem: Requires a RendererComponent. Skipping update.");
+			return warnOnce("ThreeRenderSystem: Requires a Renderer. Skipping update.");
 		}
 
 		const viewport = this.world.getSingletonComponent(Viewport);
 		if (!viewport)
 		{
-			return warnOnce("ThreeBasicRenderSystem: Requires a Viewport component. Skipping update.");
+			return warnOnce("ThreeRenderSystem: Requires a Viewport component. Skipping update.");
 		}
 
 		let cameraEntity: EntityID | undefined;
@@ -42,7 +43,7 @@ export class ThreeRenderSystem extends System
 		if (!activeCamera)
 		{
 			return warnOnce(
-				"ThreeBasicRenderSystem: Requires an ActiveCamera singleton attached to an entity with a sibling Camera component. Skipping update.",
+				"ThreeRenderSystem: Requires an ActiveCamera singleton attached to an entity with a sibling Camera component. Skipping update.",
 			);
 		}
 
@@ -50,13 +51,13 @@ export class ThreeRenderSystem extends System
 		if (!camera)
 		{
 			return warnOnce(
-				"ThreeBasicRenderSystem: The entity with the ActiveCameraComponent must also have a Camera component. Skipping update.",
+				"ThreeRenderSystem: The entity with the ActiveCameraComponent must also have a Camera component. Skipping update.",
 			);
 		}
 
-		Instrumentor.end("ThreeBasicRenderSystem::update::resolveComponents");
+		Instrumentor.end("ThreeRenderSystem::update::resolveComponents");
 
-		Instrumentor.start("ThreeBasicRenderSystem::update::updateCameraMatrix");
+		Instrumentor.start("ThreeRenderSystem::update::updateCameraMatrix");
 
 		if (camera instanceof PerspectiveCamera)
 		{
@@ -72,11 +73,9 @@ export class ThreeRenderSystem extends System
 			camera.updateProjectionMatrix();
 		}
 
-		Instrumentor.end("ThreeBasicRenderSystem::update::updateCameraMatrix");
+		Instrumentor.end("ThreeRenderSystem::update::updateCameraMatrix");
 
 		// update renderer dimensions
-		Instrumentor.start("ThreeBasicRenderSystem::update::resize");
-
 		if (this.cachedHeight !== viewport.height || this.cachedWidth !== viewport.width)
 		{
 			this.cachedHeight = viewport.height;
@@ -84,15 +83,9 @@ export class ThreeRenderSystem extends System
 			this.resize(viewport);
 		}
 
-		Instrumentor.end("ThreeBasicRenderSystem::update::resize");
-
-		Instrumentor.start("ThreeBasicRenderSystem::update::render");
-
 		this.render(delta, scene, camera, renderer, viewport);
 
-		Instrumentor.end("ThreeBasicRenderSystem::update::render");
-
-		Instrumentor.end("ThreeBasicRenderSystem::update");
+		Instrumentor.end("ThreeRenderSystem::update");
 	}
 
 	/**
@@ -103,17 +96,11 @@ export class ThreeRenderSystem extends System
 	 * @param camera {@link Camera}
 	 * @param viewport {@link Viewport}
 	 */
-	render(
-		delta: number,
-		scene: Scene,
-		camera: Camera,
-		renderer: WebGLRenderer,
-		viewport: Viewport,
-	)
+	render(delta: number, scene: Scene, camera: Camera, renderer: WebGLRenderer | WebGPURenderer, viewport: Viewport)
 	{
-		Instrumentor.start("ThreeBasicRenderSystem::render");
+		Instrumentor.start("ThreeRenderSystem::render");
 		renderer.render(scene, camera);
-		Instrumentor.end("ThreeBasicRenderSystem::render");
+		Instrumentor.end("ThreeRenderSystem::render");
 	}
 
 	/**
@@ -123,15 +110,19 @@ export class ThreeRenderSystem extends System
 	 */
 	resize(viewport: Viewport)
 	{
-		let renderer = this.world.getSingletonComponent(WebGLRenderer);
+		let renderer = this.world.getSingletonComponent(WebGPURenderer) ?? this.world.getSingletonComponent(WebGLRenderer);
 		if (!renderer)
 		{
-			warnOnce("ThreeBasicRenderSystem: No renderer found on SceneDataComponent. Cannot resize.");
+			warnOnce("ThreeRenderSystem: No renderer found in world. Cannot resize.");
 		}
 		else
 		{
+			Instrumentor.start("ThreeRenderSystem::resize");
+
 			renderer.setSize(viewport.width, viewport.height, false);
 			renderer.setPixelRatio(viewport.pixelRatio);
+
+			Instrumentor.end("ThreeRenderSystem::resize");
 		}
 	}
 
